@@ -8444,25 +8444,25 @@ return{_strlen:lb,_ge_mul8:Va,_keccak:db,_ge_scalarmult:Ta,_ge_fromfe_frombytes_
 
 
 
-var moneroConfig = {
+var RIFTConfig = {
     coinUnitPlaces: 12,
     coinSymbol: 'XMR',
-    coinName: 'Monero',
-    coinUriPrefix: 'monero:',
+    coinName: 'RIFT',
+    coinUriPrefix: 'RIFT:',
     addressPrefix: 18
 };
-var aeonConfig = {
+var NULLConfig = {
     coinUnitPlaces: 12,
-    coinSymbol: 'AEON',
-    coinName: 'Aeon',
-    coinUriPrefix: 'aeon:',
+    coinSymbol: 'NULL',
+    coinName: 'NULL',
+    coinUriPrefix: 'NULL:',
     addressPrefix: 0xB2
 };
-var sumokoinConfig = {
+var DMkoinConfig = {
     coinUnitPlaces: 9,
-    coinSymbol: 'SUMO',
-    coinName: 'Sumokoin',
-    coinUriPrefix: 'sumo:',
+    coinSymbol: 'DM',
+    coinName: 'DMkoin',
+    coinUriPrefix: 'DM:',
     addressPrefix: 0x2bb39a
 };
 
@@ -8888,7 +8888,7 @@ var cnUtilGen = function(initConfig) {
 
     return this;
 };
-var cnUtil = cnUtilGen(sumokoinConfig);
+var cnUtil = cnUtilGen(DMkoinConfig);
 /*
  mnemonic.js : Converts between 4-byte aligned strings and a human-readable
  sequence of words. Uses 1626 common words taken from wikipedia article:
@@ -8935,11 +8935,11 @@ function mn_encode(str, wordset_name, coin_name) {
         out = out.concat([wordset.words[w1], wordset.words[w2], wordset.words[w3]]);
     }
     
-    if(coin_name != "aeon"){
+    if(coin_name != "NULL"){
         out.push(out[mn_get_checksum_index(out, wordset.prefix_len)]);
     }
     
-    if(coin_name == "sumokoin"){
+    if(coin_name == "DMkoin"){
         out.push(wordset.words[mn_get_checksum_index2(out, wordset)]);
     }
     
@@ -9002,7 +9002,7 @@ function mn_random(bits) {
     'use strict';
     if (bits % 32 !== 0) throw "Something weird went wrong: Invalid number of bits - " + bits;
     var array = new Uint32Array(bits / 32);
-    if (!window.crypto) throw "Unfortunately MyMonero only runs on browsers that support the JavaScript Crypto API";
+    if (!window.crypto) throw "Unfortunately MyRIFT only runs on browsers that support the JavaScript Crypto API";
     var i = 0;
 
     function arr_is_zero() {
@@ -9826,7 +9826,7 @@ var mn_words = {
             "rajado", "ralo", "rampeiro", "ranzinza", "raptor", "raquitismo", "raro", "rasurar",
             "ratoeira", "ravioli", "razoavel", "reavivar", "rebuscar", "recusavel", "reduzivel", "reexposicao",
             "refutavel", "regurgitar", "reivindicavel", "rejuvenescimento", "relva", "remuneravel", "renunciar", "reorientar",
-            "repuxo", "requisito", "resumo", "returno", "reutilizar", "revolvido", "rezonear", "riacho",
+            "repuxo", "requisito", "reDM", "returno", "reutilizar", "revolvido", "rezonear", "riacho",
             "ribossomo", "ricota", "ridiculo", "rifle", "rigoroso", "rijo", "rimel", "rins",
             "rios", "riqueza", "riquixa", "rissole", "ritualistico", "rivalizar", "rixa", "robusto",
             "rococo", "rodoviario", "roer", "rogo", "rojao", "rolo", "rompimento", "ronronar",
@@ -10609,16 +10609,16 @@ html { font-family: sans-serif }
             <p>
                 This page generates a new
                 <select onchange="js:setCoin(this.selectedIndex);" class="waves-effect waves-light btn" style="max-width: 20%">
-                  <option>Sumokoin</option>
-                  <option>Monero</option>
-                  <option>Aeon</option>
+                  <option>DMkoin</option>
+                  <option>RIFT</option>
+                  <option>NULL</option>
                 </select>
                 wallet. It is self contained and
                 does all the necessary calculations locally, so is suitable for generating a new wallet on a machine
                 that is not connected to the network, and may even never be. This way, you can create
-                a Sumokoin, Monero or Aeon wallet without risking the keys. This file is GPG signed, see <a href="#gpg-instructions">GPG instructions</a>.
+                a DMkoin, RIFT or NULL wallet without risking the keys. This file is GPG signed, see <a href="#gpg-instructions">GPG instructions</a>.
                 You can check for up to date versions of this page
-                <a href="https://github.com/sumoprojects/sumokoin-wallet-generator/blob/master/sumokoin-wallet-generator.html">here</a>.
+                <a href="https://github.com/DMprojects/DMkoin-wallet-generator/blob/master/DMkoin-wallet-generator.html">here</a>.
             </p>
         </div>
     </div>
@@ -10634,7 +10634,7 @@ html { font-family: sans-serif }
             <form>
                 <input class="btn deep-orange" type="button" onclick="js:genwallet_prefix();" value="Generate wallet with prefix" action="" id="gen_prefix_widget"/>
                 <p>(very slow for more than a few characters)</p>
-                <input type="text" value="Sumo" id="prefix_widget" oninput="js:check_prefix_validity()"; />
+                <input type="text" value="DM" id="prefix_widget" oninput="js:check_prefix_validity()"; />
             </form>
         </div>
     </div>
@@ -10660,7 +10660,7 @@ html { font-family: sans-serif }
                          style="line-height: 25px; height: 25px; font-size: 60%; padding: 0px 1.5rem;"/ id="show_qr_code">
                     </span>
 
-                    <p>This is the address you give to third parties to send SUMO/XMR/AEON to you.
+                    <p>This is the address you give to third parties to send DM/RIFT/NULL to you.
                         <br><b>It is the only information here that's meant to be public.</b>
                     </p>
                 </div>
@@ -10677,7 +10677,7 @@ html { font-family: sans-serif }
                 <div class="card-content pink-text text-darken-5">
                     <span class="card-title pink-text text-darken-5">Mnemonic seed</span>
                     <p>
-                        The mnemonic seed is a string that comprises 26 (Sumokoin), 25 (Monero) or 24 (AEON) words and allows you to recreate your
+                        The mnemonic seed is a string that comprises 26 (DMkoin), 25 (RIFT) or 24 (NULL) words and allows you to recreate your
                         private keys. <b>Keep it secure!</b>
                     </p>
                 </div>
@@ -10729,20 +10729,20 @@ html { font-family: sans-serif }
 <h5 id="gpg-instructions">How to verify GPG signatures</h5>
 
 <p>
-All released versions of this page will be GPG signed by moneromooo, to avoid trojaned versions
+All released versions of this page will be GPG signed by RIFTmooo, to avoid trojaned versions
 being passed around. It is in your interest to check the signature.
 </p>
 <p>
 This page is maintained as a
-<a href="https://github.com/sumoprojects/sumokoin-wallet-generator/">git repository</a>.
+<a href="https://github.com/DMprojects/DMkoin-wallet-generator/">git repository</a>.
 All commits are signed. In addition, released versions of the page are signed separately.
 In order to check either, you first need to import
-<a href="https://raw.githubusercontent.com/sumoprojects/sumokoin/master/utils/gpg_keys/sumoshi.asc">sumoshi's GPG key</a>
-from the Sumokoin source tree:
+<a href="https://raw.githubusercontent.com/DMprojects/DMkoin/master/utils/gpg_keys/DMshi.asc">DMshi's GPG key</a>
+from the DMkoin source tree:
 </p>
 
 <code>
-gpg --import sumoshi.asc
+gpg --import DMshi.asc
 </code>
 
 <h5>Checking a standalone signature</h5>
@@ -10750,12 +10750,12 @@ gpg --import sumoshi.asc
 <p>
 You need to get the signature file corresponding to the version of the page you're using.
 Original signature files are
-<a href="https://raw.githubusercontent.com/sumoprojects/sumokoin-wallet-generator/master/sumokoin-wallet-generator.html.asc">in the git repository</a>
-as well. Save it as sumokoin-wallet-generator.html.asc, then:
+<a href="https://raw.githubusercontent.com/DMprojects/DMkoin-wallet-generator/master/DMkoin-wallet-generator.html.asc">in the git repository</a>
+as well. Save it as DMkoin-wallet-generator.html.asc, then:
 </p>
 
 <code>
-gpg --verify sumokoin-wallet-generator.html.asc
+gpg --verify DMkoin-wallet-generator.html.asc
 </code>
 
 <p>
@@ -10763,12 +10763,12 @@ You should see a message similar to:
 </p>
 
 <code>
-gpg: Good signature from "Sumoshi Tanaka &lt;sumoshi.tanaka@gmail.com&gt;"
+gpg: Good signature from "DMshi Tanaka &lt;DMshi.tanaka@gmail.com&gt;"
 </code>
 
 <p>
 Check the signature is from the key you imported previously! If not, you may be checking
-that file was properly signed by an attacker instead of sumoshi. Beware that anyone can
+that file was properly signed by an attacker instead of DMshi. Beware that anyone can
 place any email address in a new GPG key, so the right email being shown is no guarantee.
 </p>
 
@@ -10792,26 +10792,26 @@ You should see a message similar to:
 </p>
 
 <code>
-gpg: Good signature from "Sumoshi Tanaka &lt;sumoshi.tanaka@gmail.com&gt;"
+gpg: Good signature from "DMshi Tanaka &lt;DMshi.tanaka@gmail.com&gt;"
 </code>
 
 <p>
 Check the signature is from the key you imported previously! If not, you may be checking
-that file was properly signed by an attacker instead of moneromooo. Beware that anyone can
+that file was properly signed by an attacker instead of RIFTmooo. Beware that anyone can
 place any email address in a new GPG key, so the right email being shown is no guarantee.
 </p>
 
 <h5>Credits</h5>
 <p>
-    Made by moneromooo, based on code from <a href="https://mymonero.com/">MyMonero</a>. Copyright notices in the source.
+    Made by RIFTmooo, based on code from <a href="https://myRIFT.com/">MyRIFT</a>. Copyright notices in the source.
     <br>
     Thanks to antanst for the CSS, and to luigi1111 for crypto fixes and improvements.
     <br>
     If you found this useful, a donation would be appreciated:
     <br>
-<pre>Monero: 4AfUP827TeRZ1cck3tZThgZbRCEwBrpcJTkA1LCiyFVuMH4b5y59bKMZHGb9y58K3gSjWDCBsB4RkGsGDhsmMG5R2qmbLeW</pre>
+<pre>RIFT: 4AfUP827TeRZ1cck3tZThgZbRCEwBrpcJTkA1LCiyFVuMH4b5y59bKMZHGb9y58K3gSjWDCBsB4RkGsGDhsmMG5R2qmbLeW</pre>
     <br>
-<pre>Aeon: WmtXcFZj5iGY21JxAtFsJVQmQQyo7jgoJP8V4zLWVzDeeTfvbP8Mzb5gbNpQEc6BkeUYUqjGntHDSDyA6LKjdGBQ1w9iEpfVw</pre>
+<pre>NULL: WmtXcFZj5iGY21JxAtFsJVQmQQyo7jgoJP8V4zLWVzDeeTfvbP8Mzb5gbNpQEc6BkeUYUqjGntHDSDyA6LKjdGBQ1w9iEpfVw</pre>
 
 <br>
 </p>
@@ -10857,20 +10857,20 @@ function genwallet(lang)
   address_widget.innerHTML = cnUtil.pubkeys_to_string(keys.spend.pub, keys.view.pub);
   address_qr_widget.innerHTML = "";
   
-  // only monero and sumokoin has the URI scheme
+  // only RIFT and DMkoin has the URI scheme
   wallet_prefix = String(prefix_widget.value);
-  if(wallet_prefix.startsWith("Sumo")){
-    mnemonic_widget.innerHTML = mn_encode(seed,current_lang, "sumokoin");
+  if(wallet_prefix.startsWith("DM")){
+    mnemonic_widget.innerHTML = mn_encode(seed,current_lang, "DMkoin");
 	qr=new QRCode(address_qr_widget, {correctLevel:QRCode.CorrectLevel.L});
-    qr.makeCode("sumo:"+keys.public_addr);
+    qr.makeCode("DM:"+keys.public_addr);
   }
   else if (wallet_prefix.startsWith("4")) {
-    mnemonic_widget.innerHTML = mn_encode(seed,current_lang, "monero");
+    mnemonic_widget.innerHTML = mn_encode(seed,current_lang, "RIFT");
     qr=new QRCode(address_qr_widget, {correctLevel:QRCode.CorrectLevel.L});
-    qr.makeCode("monero:"+keys.public_addr);
+    qr.makeCode("RIFT:"+keys.public_addr);
   }
   else if(wallet_prefix.startsWith("W")) {
-    mnemonic_widget.innerHTML = mn_encode(seed,current_lang, "aeon");
+    mnemonic_widget.innerHTML = mn_encode(seed,current_lang, "NULL");
     //qr.makeCode(keys.public_addr);
   }
   else{
@@ -10912,20 +10912,20 @@ function genwallet_prefix_worker()
   address_widget.innerHTML = keys.public_addr;
   address_qr_widget.innerHTML = "";
   
-  // only monero and sumokoin has the URI scheme
+  // only RIFT and DMkoin has the URI scheme
   wallet_prefix = String(prefix_widget.value);
   if (wallet_prefix.startsWith("4")) {
-    mnemonic_widget.innerHTML = mn_encode(seed,current_lang, "monero");
+    mnemonic_widget.innerHTML = mn_encode(seed,current_lang, "RIFT");
     qr=new QRCode(address_qr_widget, {correctLevel:QRCode.CorrectLevel.L});
-    qr.makeCode("monero:"+keys.public_addr);
+    qr.makeCode("RIFT:"+keys.public_addr);
   }
-  else if(wallet_prefix.startsWith("Sumo")){
-    mnemonic_widget.innerHTML = mn_encode(seed,current_lang, "sumokoin");
+  else if(wallet_prefix.startsWith("DM")){
+    mnemonic_widget.innerHTML = mn_encode(seed,current_lang, "DMkoin");
 	qr=new QRCode(address_qr_widget, {correctLevel:QRCode.CorrectLevel.L});
-    qr.makeCode("sumo:"+keys.public_addr);
+    qr.makeCode("DM:"+keys.public_addr);
   }
   else if(wallet_prefix.startsWith("W")) {
-    mnemonic_widget.innerHTML = mn_encode(seed,current_lang, "aeon");
+    mnemonic_widget.innerHTML = mn_encode(seed,current_lang, "NULL");
     //qr.makeCode(keys.public_addr);
   }
   else{
@@ -11041,19 +11041,19 @@ function setCoin(index)
   var language
   prefix_widget = document.getElementById("prefix_widget");
   if (index == 0) {
-    cnUtil = cnUtilGen(sumokoinConfig);
-    prefix_widget.value = "Sumo";
+    cnUtil = cnUtilGen(DMkoinConfig);
+    prefix_widget.value = "DM";
     enable = true
     language = "english"
   }
   else if (index == 1) {
-    cnUtil = cnUtilGen(moneroConfig);
+    cnUtil = cnUtilGen(RIFTConfig);
     prefix_widget.value = "4";
     enable = true
     language = "english"
   }
   else if (index == 2) {
-    cnUtil = cnUtilGen(aeonConfig);
+    cnUtil = cnUtilGen(NULLConfig);
     prefix_widget.value = "W";
     enable = false
     language = "electrum"
